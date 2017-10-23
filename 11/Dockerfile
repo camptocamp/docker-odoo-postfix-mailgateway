@@ -16,11 +16,13 @@ RUN apt-get update \
         rsyslog \
         postfix vim telnet \
     && postconf -e myhostname=$POSTFIX_MAIL_NAME \
-    && postconf -e virtual_alias_maps=/etc/postfix/virtual_aliases \
+#    && postconf -e virtual_alias_maps=/etc/postfix/virtual_aliases \
     && postconf -e alias_maps=hash:/etc/aliases \
     && postconf -e alias_database=hash:/etc/aliases \
     && echo "$POSTFIX_MAIL_NAME.mailgate: '|/test_mailgate.sh'" >> /etc/aliases \
     && echo "@$POSTFIX_MAIL_NAME $POSTFIX_MAIL_NAME.mailgate@localhost" > /etc/postfix/virtual_aliases
+RUN adduser ${POSTFIX_MAIL_NAME}.mailgate --disabled-login --system --force-badname
+
     #&& rm preseed.txt
 
 
@@ -32,4 +34,4 @@ COPY test_mailgate.sh /test_mailgate.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-CMD ["postfix", "start"]
+# CMD ["/usr/sbin/postfix", "start"]

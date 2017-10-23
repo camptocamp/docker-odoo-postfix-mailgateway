@@ -2,6 +2,7 @@
 
 set -e
 
-#/user/sbin/service postfix restart
+/usr/sbin/postfix stop
+/usr/sbin/postfix start
 
 exec "$@"
