@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 #run echo "postfix postfix/main_mailer_type string Internet site" > preseed.txt
 #run echo "postfix postfix/mailname string $POSTFIX_MAIL_NAME" >> preseed.txt
 
+RUN adduser ${POSTFIX_MAIL_NAME}.mailgate --disabled-login --system --force-badname
 RUN apt-get update \
 #    && debconf-set-selections preseed.txt \
 #    && apt-get install -q -y apt-utils \
@@ -16,12 +17,13 @@ RUN apt-get update \
         rsyslog \
         postfix vim telnet \
     && postconf -e myhostname=$POSTFIX_MAIL_NAME \
-#    && postconf -e virtual_alias_maps=/etc/postfix/virtual_aliases \
+    && echo $POSTFIX_MAIL_NAME'.mailgate: "|/test_mailgate.sh"' >> /etc/aliases \
+    && echo "@$POSTFIX_MAIL_NAME $POSTFIX_MAIL_NAME.mailgate" > /etc/postfix/virtual_aliases \
+    && postconf -e virtual_alias_maps=hash:/etc/postfix/virtual_aliases \
     && postconf -e alias_maps=hash:/etc/aliases \
     && postconf -e alias_database=hash:/etc/aliases \
-    && echo "$POSTFIX_MAIL_NAME.mailgate: '|/test_mailgate.sh'" >> /etc/aliases \
-    && echo "@$POSTFIX_MAIL_NAME $POSTFIX_MAIL_NAME.mailgate@localhost" > /etc/postfix/virtual_aliases
-RUN adduser ${POSTFIX_MAIL_NAME}.mailgate --disabled-login --system --force-badname
+    && postmap /etc/postfix /etc/postfix/virtual_aliases \
+    && newaliases
 
     #&& rm preseed.txt
 
