@@ -1,9 +1,12 @@
 # docker-odoo-postfix
 
-An image with Postfix as a MTA in front of Odoo
+A Docker image wich runs Postfix as a MTA in front of Odoo
 
 ## Configuration
 
 ### Enbironment variables
 
+#### POSTFIX_MAIL_NAME
+
+#### POSTFIX_MAIL_NAME
 

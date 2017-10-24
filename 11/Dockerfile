@@ -5,14 +5,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     POSTFIX_MAIL_NAME=odoo.test.ch \
     POSTFIX_MY_DESTINATION=odoo.test.ch
 
-#run echo "postfix postfix/main_mailer_type string Internet site" > preseed.txt
-#run echo "postfix postfix/mailname string $POSTFIX_MAIL_NAME" >> preseed.txt
-
 RUN adduser ${POSTFIX_MAIL_NAME}.mailgate --disabled-login --system --force-badname
 RUN apt-get update \
-#    && debconf-set-selections preseed.txt \
-#    && apt-get install -q -y apt-utils \
-#    && DEBIAN_FRONTEND=noninteractive apt-get install -q -y postfix vim \
     && apt-get install -q -y --no-install-recommends \
         rsyslog \
         postfix vim telnet \
@@ -25,9 +19,6 @@ RUN apt-get update \
     && postmap /etc/postfix /etc/postfix/virtual_aliases \
     && newaliases
 
-    #&& rm preseed.txt
-
-
 EXPOSE 25 465 587
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
@@ -36,4 +27,4 @@ COPY test_mailgate.sh /test_mailgate.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# CMD ["/usr/sbin/postfix", "start"]
+CMD ["tail", "-F", "/var/log/mail.log"]
