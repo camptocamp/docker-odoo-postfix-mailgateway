@@ -2,25 +2,21 @@ FROM debian:stretch
 MAINTAINER Camptocamp
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    POSTFIX_MAIL_NAME=odoo.test.ch
-    #POSTFIX_MY_DESTINATION=odoo.test.ch
+    POSTFIX_MAIL_NAME=odoo.test.ch \
+    ODOO_DB_NAME=odoodb \
+    ODOO_HOST=odoo \
+    ODOO_USER_ID=1 \
+    ODOO_USER_PWD=admin \
+    ODOO_MODEL=project.project
 
-RUN adduser ${POSTFIX_MAIL_NAME}.mailgate --disabled-login --system --force-badname
+RUN adduser odoomailgate --disabled-login --system --force-badname
 RUN apt-get update \
     && apt-get install -q -y --no-install-recommends \
         rsyslog \
         postfix \
         python \
         # Only here for testing
-        vim telnet \
-    && postconf -e myhostname=$POSTFIX_MAIL_NAME \
-    && echo $POSTFIX_MAIL_NAME'.mailgate: "|/openerp_mailgate.py --host=odoo --dbname=odoodb -u 1 -p admin -o project.project"' >> /etc/aliases \
-    && echo "@$POSTFIX_MAIL_NAME $POSTFIX_MAIL_NAME.mailgate" > /etc/postfix/virtual_aliases \
-    && postconf -e virtual_alias_maps=hash:/etc/postfix/virtual_aliases \
-    && postconf -e alias_maps=hash:/etc/aliases \
-    && postconf -e alias_database=hash:/etc/aliases \
-    && postmap /etc/postfix /etc/postfix/virtual_aliases \
-    && newaliases
+        vim telnet
 
 EXPOSE 25
 
