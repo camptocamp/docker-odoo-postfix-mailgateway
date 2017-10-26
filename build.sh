@@ -1,7 +1,13 @@
-docker build -t docker-odoo-postfix:latest ./11
+#!/bin/bash
 
-docker stop postfix
-docker rm postfix
+# Build a new image
 
-# docker run --rm --name postfix docker-odoo-postfix:latest &
+docker build -t docker-odoo-postfix:latest ./10
+
+
+# If you want a container created and started after the build
+
+# docker stop postfix
+# docker rm postfix
+# docker run --rm --name postfix docker-odoo-postfix:latest
 

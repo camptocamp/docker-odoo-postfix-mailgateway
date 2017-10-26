@@ -1,6 +1,8 @@
 helo odoo.test.ch
 mail from: tdu@ch.ch
-rcpt to: yoyo@odoo.test.ch
+rcpt to: party-time@odoo.test.ch
 data
 hola mailgate
+
 .
+

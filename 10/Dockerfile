@@ -14,7 +14,6 @@ RUN apt-get update \
         # Only here for testing
         vim telnet \
     && postconf -e myhostname=$POSTFIX_MAIL_NAME \
-    #&& echo $POSTFIX_MAIL_NAME'.mailgate: "|/test_mailgate.sh"' >> /etc/aliases \
     && echo $POSTFIX_MAIL_NAME'.mailgate: "|/openerp_mailgate.py --host=odoo --dbname=odoodb -u 1 -p admin -o project.project"' >> /etc/aliases \
     && echo "@$POSTFIX_MAIL_NAME $POSTFIX_MAIL_NAME.mailgate" > /etc/postfix/virtual_aliases \
     && postconf -e virtual_alias_maps=hash:/etc/postfix/virtual_aliases \
