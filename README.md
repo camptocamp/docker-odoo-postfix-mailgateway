@@ -16,8 +16,14 @@ The preconfigured domain name is odoo.test.ch, to change this use environment va
 
 ### Environment variables
 
-#### `POSTFIX_MAIL_NAME`
-Set up the domain name the Postfix deamon will answer to.
+`POSTFIX_MAIL_NAME  :`Domain name the Postfix deamon will answer to.
+`ODOO_HOST`         : Host name of the Odoo server.
+`ODOO_DB_NAME`      : Name of Odoo database.
+`ODOO_USER_ID`      : Id of the Odoo user to run mailgate.
+`ODOO_USER_PWD`     : Password of the Odoo user.
+`ODOO_MODEL`        : 
+
+
 
 
 ### DNS
@@ -28,10 +34,8 @@ More...
 
 ## ToDo
 
-* Move postfix configurtaion from the Dockerfile to the docker-entrypoint.sh
-
 * Add more configuration with env var
 
-* Fix error on email sent by the openerp_mailgate.py script (config)
+* Fix error on email sent by the `openerp_mailgate.py` script (config)
 
-* Work out the model parameter of openerp_mailgate.py
+* Work out the model parameter of `openerp_mailgate.py`

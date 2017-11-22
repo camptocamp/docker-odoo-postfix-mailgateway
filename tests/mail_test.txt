@@ -1,8 +1,9 @@
 helo odoo.postfix.ch
 mail from: tdu@ch.ch
-rcpt to: party-time@odoo.postfix.ch
+rcpt to: new-project@odoo.postfix.ch
 data
-hola mailgate
+Subject: New Project From Postfix
+
+hello projet 
 
 .
-
