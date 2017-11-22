@@ -9,14 +9,16 @@ ENV DEBIAN_FRONTEND=noninteractive \
     ODOO_USER_PWD=admin \
     ODOO_MODEL=project.project
 
-RUN adduser odoomailgate --disabled-login --system --force-badname
 RUN apt-get update \
     && apt-get install -q -y --no-install-recommends \
+        jq \
         rsyslog \
         postfix \
         python \
         # Only here for testing
         vim telnet
+
+VOLUME "/var/spool/postfix"
 
 EXPOSE 25
 
