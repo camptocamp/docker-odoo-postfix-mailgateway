@@ -2,7 +2,7 @@ FROM debian:stretch
 MAINTAINER Camptocamp
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    POSTFIX_MAIL_NAME=odoo.test.ch \
+    POSTFIX_HOSTNAME=odoo.postfix.local \
     ODOO_DB_NAME=odoodb \
     ODOO_HOST=odoo \
     ODOO_USER_ID=1 \
@@ -15,8 +15,8 @@ RUN apt-get update \
         rsyslog \
         postfix \
         python \
-        # Only here for testing
-        vim telnet
+        # Only here for debug
+        vim telnet procps
 
 VOLUME "/var/spool/postfix"
 

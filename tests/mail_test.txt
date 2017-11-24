@@ -1,9 +1,11 @@
-helo odoo.postfix.ch
-mail from: tdu@ch.ch
-rcpt to: new-project@odoo.postfix.ch
-data
-Subject: New Project From Postfix
+HELO test.com
+MAIL FROM: john.doe@test.com
+RCPT TO: party-time@odoo.client01.ch
+DATA
+From: "John Doe" <john.doe@test.com>
+To: "Party Time Project" <party-time@odoo.client01.ch>
+Subject: test message sent through mailgate
 
-hello projet 
+Hello I am an automaticly generated task
 
 .
