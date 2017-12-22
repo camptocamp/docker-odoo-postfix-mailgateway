@@ -38,4 +38,20 @@ postmap /etc/postfix /etc/postfix/virtual_aliases
 newaliases
 postfix start
 
-exec "$@"
+_term() {
+    postfix stop
+    service rsyslog stop
+    export EXIT=1
+    }
+trap _term SIGTERM
+
+# send log to stdout
+$@ &
+
+export EXIT=0
+while true; do
+  sleep 1
+  if [ $EXIT -eq 1 ]; then
+    exit 0
+  fi
+done

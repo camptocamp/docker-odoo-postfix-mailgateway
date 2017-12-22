@@ -1,0 +1,19 @@
+version: '2'
+volumes:
+  mailbox:
+services:
+  postfix:
+    build: 10/
+    image: camptocamp/odoo-postfix
+    volumes:
+      - mailbox:/var/spool/postfix
+    ports:
+      - "2525:25"
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+      POSTFIX_HOSTNAME: odoo.postfix.local
+      ODOO_DB_NAME: odoodb
+      ODOO_HOST: odoo
+      ODOO_USER_ID: 1
+      ODOO_USER_PWD: admin
+      ODOO_MODEL: project.project
