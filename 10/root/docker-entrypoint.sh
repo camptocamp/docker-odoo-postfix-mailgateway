@@ -39,14 +39,20 @@ newaliases
 postfix start
 
 _term() {
-    postfix stop
-    service rsyslog stop
-    export EXIT=1
-    }
+  echo -n "Stopping postfix..."
+  postfix stop
+  echo "OK"
+  echo -n "Stopping rsyslog..."
+  service rsyslog stop
+  echo "OK"
+  export EXIT=1
+}
 trap _term SIGTERM
 
 # send log to stdout
-$@ &
+tail -F /var/log/mail.log &
+# send error to stderr
+>&2 tail -F /var/log/mail.err &
 
 export EXIT=0
 while true; do

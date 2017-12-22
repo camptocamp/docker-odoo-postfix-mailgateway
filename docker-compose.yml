@@ -10,10 +10,11 @@ services:
     ports:
       - "2525:25"
     environment:
-      DEBIAN_FRONTEND: noninteractive
       POSTFIX_HOSTNAME: odoo.postfix.local
       ODOO_DB_NAME: odoodb
       ODOO_HOST: odoo
       ODOO_USER_ID: 1
       ODOO_USER_PWD: admin
       ODOO_MODEL: project.project
+      CLIENT_INSTANCE: |
+        [ {"name":"test", "domain":"odoo.client01.ch", "odoo_host":"odoo", "odoo_db":"odoodb", "odoo_user_id":"1", "odoo_user_pwd":"test", "odoo_model":"crm.lead"} ]

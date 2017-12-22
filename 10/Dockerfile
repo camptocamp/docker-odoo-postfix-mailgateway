@@ -22,10 +22,6 @@ VOLUME "/var/spool/postfix"
 
 EXPOSE 25
 
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-COPY openerp_mailgate.py /openerp_mailgate.py
-COPY test_mailgate.sh /test_mailgate.sh
+COPY root /
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["tail", "-F", "/var/log/mail.log"]
