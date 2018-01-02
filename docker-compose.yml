@@ -1,0 +1,15 @@
+version: '2'
+volumes:
+  mailbox:
+services:
+  postfix:
+    build: 10/
+    image: camptocamp/odoo-postfix
+    volumes:
+      - mailbox:/var/spool/postfix
+    ports:
+      - "2525:25"
+    environment:
+      POSTFIX_HOSTNAME: odoo.postfix.local
+      CLIENT_INSTANCE: |
+        [ {"name":"test", "domain":"odoo.client01.ch", "odoo_host":"odoo", "odoo_db":"odoodb", "odoo_user_id":"1", "odoo_user_pwd":"test", "odoo_model":"crm.lead"} ]
